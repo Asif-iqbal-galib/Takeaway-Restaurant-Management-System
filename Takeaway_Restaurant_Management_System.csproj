@@ -111,7 +111,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include=".gitignore" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TakeawayRestaurant.Tests\TakeawayRestaurant.Tests.csproj">
       <Project>{67754196-c552-4187-be3a-cd8264999913}</Project>
