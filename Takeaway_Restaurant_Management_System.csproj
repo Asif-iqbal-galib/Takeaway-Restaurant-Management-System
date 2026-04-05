@@ -66,8 +66,12 @@
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\OrderItem.cs" />
     <Compile Include="Classes\Utilities\CurrentUser.cs" />
-    <Compile Include="Forms\frmCustomerManagement.cs" />
-    <Compile Include="Forms\frmDeliveryManagement.cs" />
+    <Compile Include="Forms\frmCustomerManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDeliveryManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmInventory.cs" />
     <Compile Include="Forms\frmReports.cs" />
     <Compile Include="Forms\frmKitchenView.cs" />
