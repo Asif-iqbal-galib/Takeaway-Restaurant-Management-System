@@ -72,7 +72,9 @@
     <Compile Include="Forms\frmDeliveryManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmInventory.cs" />
+    <Compile Include="Forms\frmInventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmReports.cs" />
     <Compile Include="Forms\frmKitchenView.cs" />
     <Compile Include="Forms\frmLogin.cs" />
@@ -80,7 +82,9 @@
     <Compile Include="Forms\frmMenuManagement.cs" />
     <Compile Include="Forms\frmSettings.cs" />
     <Compile Include="Forms\frmStaffManagement.cs" />
-    <Compile Include="Forms\frmTakeOrder.cs" />
+    <Compile Include="Forms\frmTakeOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\frmLogin.resx">
