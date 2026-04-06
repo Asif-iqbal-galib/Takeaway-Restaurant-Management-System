@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="../TakeawayRestaurant.Tests/TakeawayRestaurant.Tests.csproj" />
+  <Project Path="TakeawayRestaurant.Tests/TakeawayRestaurant.Tests.csproj" Id="8e18679e-1c6a-44c7-be93-59c3c8e90903" />
   <Project Path="Takeaway_Restaurant_Management_System.csproj" Id="f4c310ca-bfd5-4990-a940-465cdf7147fa" />
 </Solution>
