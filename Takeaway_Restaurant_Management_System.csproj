@@ -75,13 +75,25 @@
     <Compile Include="Forms\frmInventory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmReports.cs" />
-    <Compile Include="Forms\frmKitchenView.cs" />
-    <Compile Include="Forms\frmLogin.cs" />
+    <Compile Include="Forms\frmReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmKitchenView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmMainDashboard.cs" />
-    <Compile Include="Forms\frmMenuManagement.cs" />
-    <Compile Include="Forms\frmSettings.cs" />
-    <Compile Include="Forms\frmStaffManagement.cs" />
+    <Compile Include="Forms\frmMenuManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmStaffManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmTakeOrder.cs">
       <SubType>Form</SubType>
     </Compile>
