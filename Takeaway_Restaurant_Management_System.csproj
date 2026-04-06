@@ -84,7 +84,9 @@
     <Compile Include="Forms\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmMainDashboard.cs" />
+    <Compile Include="Forms\frmMainDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmMenuManagement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,12 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TakeawayRestaurant.Tests\TakeawayRestaurant.Tests.csproj">
-      <Project>{67754196-c552-4187-be3a-cd8264999913}</Project>
-      <Name>TakeawayRestaurant.Tests</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
