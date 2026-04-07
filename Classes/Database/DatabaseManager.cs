@@ -79,19 +79,19 @@ namespace Takeaway_Restaurant_Management_System.Classes.Database
         }
 
         // =============================================
-        // DASHBOARD STATS METHODS (FIXED WITH UTC)
+        // DASHBOARD STATS METHODS
         // =============================================
 
         public int GetTodayOrdersCount()
         {
-            string query = "SELECT COUNT(*) FROM Orders WHERE CAST(OrderDate AS DATE) = CAST(GETUTCDATE() AS DATE) AND PaymentStatus = 'Paid'";
+            string query = "SELECT COUNT(*) FROM Orders WHERE CAST(OrderDate AS DATE) = CAST(GETDATE() AS DATE) AND PaymentStatus = 'Paid'";
             object result = ExecuteScalar(query);
             return result != null ? Convert.ToInt32(result) : 0;
         }
 
         public decimal GetTodayRevenue()
         {
-            string query = "SELECT ISNULL(SUM(TotalAmount), 0) FROM Orders WHERE CAST(OrderDate AS DATE) = CAST(GETUTCDATE() AS DATE) AND PaymentStatus = 'Paid'";
+            string query = "SELECT ISNULL(SUM(TotalAmount), 0) FROM Orders WHERE CAST(OrderDate AS DATE) = CAST(GETDATE() AS DATE) AND PaymentStatus = 'Paid'";
             object result = ExecuteScalar(query);
             return result != null ? Convert.ToDecimal(result) : 0;
         }

@@ -72,10 +72,10 @@ namespace Takeaway_Restaurant_Management_System.Forms
         private void InitializeComponent()
         {
             this.Text = "Take Order - Appeliano Restaurant";
-            this.Size = new Size(1350, 780);
+            this.Size = new Size(1350, 800);
             this.StartPosition = FormStartPosition.CenterParent;
             this.BackColor = Color.FromArgb(240, 240, 240);
-            this.MinimumSize = new Size(1200, 700);
+            this.MinimumSize = new Size(1200, 750);
 
             CreateCustomerSection();
             CreateDeliverySection();
@@ -88,59 +88,55 @@ namespace Takeaway_Restaurant_Management_System.Forms
         {
             grpCustomer = new GroupBox();
             grpCustomer.Text = "Customer Information";
-            grpCustomer.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            grpCustomer.Location = new Point(12, 10);
-            grpCustomer.Size = new Size(1310, 65);
+            grpCustomer.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            grpCustomer.Location = new Point(12, 12);
+            grpCustomer.Size = new Size(1310, 80);
             grpCustomer.BackColor = Color.White;
             this.Controls.Add(grpCustomer);
 
-            // Name
             Label lblName = new Label();
             lblName.Text = "Name:";
             lblName.Font = new Font("Segoe UI", 9);
-            lblName.Location = new Point(15, 25);
+            lblName.Location = new Point(15, 30);
             lblName.Size = new Size(45, 22);
             grpCustomer.Controls.Add(lblName);
 
             txtCustomerName = new TextBox();
-            txtCustomerName.Location = new Point(65, 22);
+            txtCustomerName.Location = new Point(65, 27);
             txtCustomerName.Size = new Size(180, 22);
             txtCustomerName.Font = new Font("Segoe UI", 9);
             grpCustomer.Controls.Add(txtCustomerName);
 
-            // Phone
             Label lblPhone = new Label();
             lblPhone.Text = "Phone:";
             lblPhone.Font = new Font("Segoe UI", 9);
-            lblPhone.Location = new Point(260, 25);
+            lblPhone.Location = new Point(260, 30);
             lblPhone.Size = new Size(45, 22);
             grpCustomer.Controls.Add(lblPhone);
 
             txtCustomerPhone = new TextBox();
-            txtCustomerPhone.Location = new Point(310, 22);
+            txtCustomerPhone.Location = new Point(310, 27);
             txtCustomerPhone.Size = new Size(130, 22);
             txtCustomerPhone.Font = new Font("Segoe UI", 9);
             grpCustomer.Controls.Add(txtCustomerPhone);
 
-            // Address
             Label lblAddress = new Label();
             lblAddress.Text = "Address:";
             lblAddress.Font = new Font("Segoe UI", 9);
-            lblAddress.Location = new Point(455, 25);
+            lblAddress.Location = new Point(455, 30);
             lblAddress.Size = new Size(50, 22);
             grpCustomer.Controls.Add(lblAddress);
 
             txtCustomerAddress = new TextBox();
-            txtCustomerAddress.Location = new Point(510, 22);
+            txtCustomerAddress.Location = new Point(510, 27);
             txtCustomerAddress.Size = new Size(280, 22);
             txtCustomerAddress.Font = new Font("Segoe UI", 9);
             grpCustomer.Controls.Add(txtCustomerAddress);
 
-            // Search Button
             btnSearchCustomer = new Button();
             btnSearchCustomer.Text = "Search";
             btnSearchCustomer.Font = new Font("Segoe UI", 8);
-            btnSearchCustomer.Location = new Point(805, 20);
+            btnSearchCustomer.Location = new Point(805, 25);
             btnSearchCustomer.Size = new Size(70, 26);
             btnSearchCustomer.BackColor = Color.FromArgb(52, 152, 219);
             btnSearchCustomer.ForeColor = Color.White;
@@ -154,13 +150,13 @@ namespace Takeaway_Restaurant_Management_System.Forms
             chkDelivery = new CheckBox();
             chkDelivery.Text = "Delivery Order";
             chkDelivery.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            chkDelivery.Location = new Point(12, 80);
+            chkDelivery.Location = new Point(12, 100);
             chkDelivery.Size = new Size(110, 22);
             chkDelivery.CheckedChanged += (s, e) => panelDelivery.Visible = chkDelivery.Checked;
             this.Controls.Add(chkDelivery);
 
             panelDelivery = new Panel();
-            panelDelivery.Location = new Point(12, 105);
+            panelDelivery.Location = new Point(12, 125);
             panelDelivery.Size = new Size(550, 55);
             panelDelivery.BackColor = Color.WhiteSmoke;
             panelDelivery.BorderStyle = BorderStyle.FixedSingle;
@@ -184,7 +180,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
         private void CreateMenuTabs()
         {
             tabMenu = new TabControl();
-            tabMenu.Location = new Point(12, 165);
+            tabMenu.Location = new Point(12, 190);
             tabMenu.Size = new Size(780, 420);
             tabMenu.Font = new Font("Segoe UI", 9);
             this.Controls.Add(tabMenu);
@@ -209,7 +205,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             grpOrder = new GroupBox();
             grpOrder.Text = "Current Order";
             grpOrder.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            grpOrder.Location = new Point(810, 165);
+            grpOrder.Location = new Point(810, 190);
             grpOrder.Size = new Size(515, 280);
             grpOrder.BackColor = Color.White;
             this.Controls.Add(grpOrder);
@@ -239,7 +235,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             grpOrder.Controls.Add(btnRemove);
 
             int sumX = 320;
-            // Summary labels
             Label lblCountLabel = new Label();
             lblCountLabel.Text = "Items:";
             lblCountLabel.Font = new Font("Segoe UI", 9);
@@ -303,7 +298,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             grpPayment = new GroupBox();
             grpPayment.Text = "Payment";
             grpPayment.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-            grpPayment.Location = new Point(12, 595);
+            grpPayment.Location = new Point(12, 620);
             grpPayment.Size = new Size(1310, 60);
             grpPayment.BackColor = Color.White;
             this.Controls.Add(grpPayment);
@@ -335,7 +330,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             txtAmountReceived.Location = new Point(325, 18);
             txtAmountReceived.Size = new Size(70, 22);
             txtAmountReceived.Font = new Font("Segoe UI", 9);
-            txtAmountReceived.TextChanged += (s, e) => CalculateChange();
+            txtAmountReceived.TextChanged += TxtAmountReceived_TextChanged;
             grpPayment.Controls.Add(txtAmountReceived);
 
             Label lblChangeLabel = new Label();
@@ -409,7 +404,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             int y = 5;
             List<CheckBox> chkItems = new List<CheckBox>();
 
-            // Add menu items
             foreach (var item in menuItems)
             {
                 if (item.CategoryName == category && item.IsAvailable)
@@ -426,7 +420,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 }
             }
 
-            // Meal option
             chkMakeMeal = new CheckBox();
             chkMakeMeal.Text = "Make it a Meal (+£2 for fries & drink)";
             chkMakeMeal.Font = new Font("Segoe UI", 8);
@@ -435,7 +428,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             panel.Controls.Add(chkMakeMeal);
             y += 30;
 
-            // Drink choice
             cmbDrinkChoice = new ComboBox();
             cmbDrinkChoice.Location = new Point(20, y);
             cmbDrinkChoice.Size = new Size(110, 22);
@@ -445,7 +437,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             cmbDrinkChoice.Visible = false;
             panel.Controls.Add(cmbDrinkChoice);
 
-            // Fries choice
             cmbFriesChoice = new ComboBox();
             cmbFriesChoice.Location = new Point(140, y);
             cmbFriesChoice.Size = new Size(90, 22);
@@ -456,13 +447,11 @@ namespace Takeaway_Restaurant_Management_System.Forms
             panel.Controls.Add(cmbFriesChoice);
             y += 35;
 
-            // Show/hide meal options
             chkMakeMeal.CheckedChanged += (s, e) => {
                 cmbDrinkChoice.Visible = chkMakeMeal.Checked;
                 cmbFriesChoice.Visible = chkMakeMeal.Checked;
             };
 
-            // Quantity
             Label lblQty = new Label();
             lblQty.Text = "Qty:";
             lblQty.Font = new Font("Segoe UI", 8);
@@ -479,7 +468,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             nudQuantity.Value = 1;
             panel.Controls.Add(nudQuantity);
 
-            // Add to Order Button
             btnAddToOrder = new Button();
             btnAddToOrder.Text = "Add to Order";
             btnAddToOrder.Font = new Font("Segoe UI", 8);
@@ -571,6 +559,11 @@ namespace Takeaway_Restaurant_Management_System.Forms
             lblTotal.Text = (sub + (sub * taxRate)).ToString("C");
         }
 
+        private void TxtAmountReceived_TextChanged(object sender, EventArgs e)
+        {
+            CalculateChange();
+        }
+
         private void CalculateChange()
         {
             if (decimal.TryParse(txtAmountReceived.Text, out decimal received))
@@ -625,6 +618,8 @@ namespace Takeaway_Restaurant_Management_System.Forms
             try
             {
                 string orderNum = $"ORD-{DateTime.Now:yyyyMMdd-HHmmss}";
+
+                // IMPORTANT: Set Status to "Pending" so it appears in Kitchen View
                 Order order = new Order
                 {
                     OrderNumber = orderNum,
@@ -632,7 +627,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
                     CustomerPhone = txtCustomerPhone.Text,
                     DeliveryAddress = chkDelivery.Checked ? txtDeliveryAddress.Text : "",
                     TotalAmount = total,
-                    Status = chkDelivery.Checked ? "Pending" : "Ready",
+                    Status = "Pending",  // ← FORCES ORDER TO SHOW IN KITCHEN VIEW
                     PaymentMethod = method,
                     PaymentStatus = "Paid",
                     CreatedBy = CurrentUser.UserID
