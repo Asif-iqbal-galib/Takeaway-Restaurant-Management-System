@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="Classes\Database\DatabaseManager.cs" />
     <Compile Include="Classes\DataStructures\MenuBST.cs" />
+    <Compile Include="Classes\DataStructures\Node.cs" />
+    <Compile Include="Classes\DataStructures\OrderLinkedList.cs" />
     <Compile Include="Classes\DataStructures\TreeNode.cs" />
     <Compile Include="Classes\Models\Category.cs" />
     <Compile Include="Classes\Models\Custtomer.cs" />
@@ -136,6 +138,9 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="Classes\Database\CreateDatabase.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Documentation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
