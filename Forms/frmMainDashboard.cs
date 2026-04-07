@@ -49,7 +49,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             this.MaximizeBox = false;
             this.MinimizeBox = false;
 
-            // Welcome Label
             lblWelcome = new Label();
             lblWelcome.Font = new Font("Segoe UI", 16, FontStyle.Bold);
             lblWelcome.ForeColor = Color.FromArgb(52, 73, 94);
@@ -57,7 +56,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             lblWelcome.Size = new Size(600, 40);
             this.Controls.Add(lblWelcome);
 
-            // DateTime Label
             lblDateTime = new Label();
             lblDateTime.Font = new Font("Segoe UI", 10);
             lblDateTime.ForeColor = Color.Gray;
@@ -65,7 +63,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             lblDateTime.Size = new Size(400, 25);
             this.Controls.Add(lblDateTime);
 
-            // Status Label (for debugging)
             lblStatus = new Label();
             lblStatus.Font = new Font("Segoe UI", 9);
             lblStatus.ForeColor = Color.FromArgb(100, 100, 100);
@@ -73,12 +70,10 @@ namespace Takeaway_Restaurant_Management_System.Forms
             lblStatus.Size = new Size(400, 25);
             this.Controls.Add(lblStatus);
 
-            // Timer for clock
             timer = new Timer();
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
 
-            // Menu Panel (Left Side)
             panelMenu = new Panel();
             panelMenu.Location = new Point(20, 100);
             panelMenu.Size = new Size(250, 520);
@@ -86,7 +81,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             panelMenu.BorderStyle = BorderStyle.None;
             this.Controls.Add(panelMenu);
 
-            // Content Panel (Right Side)
             panelContent = new Panel();
             panelContent.Location = new Point(290, 100);
             panelContent.Size = new Size(880, 520);
@@ -99,63 +93,51 @@ namespace Takeaway_Restaurant_Management_System.Forms
             int btnHeight = 45;
             int btnSpacing = 5;
 
-            // Menu Management Button
             btnMenuManagement = CreateMenuButton("📋 Menu Management", yPos);
             btnMenuManagement.Click += BtnMenuManagement_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Take Order Button
             btnTakeOrder = CreateMenuButton("🛒 Take Order", yPos);
             btnTakeOrder.Click += BtnTakeOrder_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Kitchen View Button
             btnKitchenView = CreateMenuButton("👨‍🍳 Kitchen View", yPos);
             btnKitchenView.Click += BtnKitchenView_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Customers Button
             btnCustomers = CreateMenuButton("👥 Customers", yPos);
             btnCustomers.Click += BtnCustomers_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Inventory Button
             btnInventory = CreateMenuButton("📦 Inventory", yPos);
             btnInventory.Click += BtnInventory_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Reports Button
             btnReports = CreateMenuButton("📊 Reports", yPos);
             btnReports.Click += BtnReports_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Staff Management Button
             btnStaff = CreateMenuButton("👤 Staff Management", yPos);
             btnStaff.Click += BtnStaff_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Delivery Button
             btnDelivery = CreateMenuButton("🚚 Delivery", yPos);
             btnDelivery.Click += BtnDelivery_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Settings Button
             btnSettings = CreateMenuButton("⚙ Settings", yPos);
             btnSettings.Click += BtnSettings_Click;
             yPos += btnHeight + btnSpacing;
 
-            // Logout Button
             btnLogout = CreateMenuButton("🚪 Logout", yPos);
             btnLogout.BackColor = Color.FromArgb(231, 76, 60);
             btnLogout.Click += BtnLogout_Click;
 
-            // Add buttons to menu panel
             panelMenu.Controls.AddRange(new Control[] {
                 btnMenuManagement, btnTakeOrder, btnKitchenView, btnCustomers,
                 btnInventory, btnReports, btnStaff, btnDelivery, btnSettings, btnLogout
             });
 
-            // Configure role-based visibility
             ConfigureRoleBasedAccess();
         }
 
@@ -174,7 +156,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             btn.Location = new Point(10, yPos);
             btn.Cursor = Cursors.Hand;
 
-            // Hover effect
             btn.MouseEnter += (s, e) => btn.BackColor = Color.FromArgb(64, 87, 109);
             btn.MouseLeave += (s, e) => btn.BackColor = Color.Transparent;
 
@@ -185,15 +166,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
         {
             if (currentUser == null) return;
 
-            // First, hide all admin-only buttons by default
-            btnMenuManagement.Visible = false;
-            btnInventory.Visible = false;
-            btnReports.Visible = false;
-            btnStaff.Visible = false;
-            btnSettings.Visible = false;
-            btnDelivery.Visible = false;
-
-            // Show all buttons for Admin
             if (currentUser.Role == "Admin")
             {
                 btnMenuManagement.Visible = true;
@@ -206,21 +178,41 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnDelivery.Visible = true;
                 btnSettings.Visible = true;
             }
-            // Cashier Role
             else if (currentUser.Role == "Cashier")
             {
+                btnMenuManagement.Visible = false;
                 btnTakeOrder.Visible = true;
+                btnKitchenView.Visible = true;
                 btnCustomers.Visible = true;
+                btnInventory.Visible = false;
+                btnReports.Visible = false;
+                btnStaff.Visible = false;
+                btnDelivery.Visible = true;
+                btnSettings.Visible = false;
             }
-            // Kitchen Staff Role
             else if (currentUser.Role == "Kitchen")
             {
+                btnMenuManagement.Visible = false;
+                btnTakeOrder.Visible = false;
                 btnKitchenView.Visible = true;
+                btnCustomers.Visible = false;
+                btnInventory.Visible = false;
+                btnReports.Visible = false;
+                btnStaff.Visible = false;
+                btnDelivery.Visible = false;
+                btnSettings.Visible = false;
             }
-            // Delivery Staff Role
             else if (currentUser.Role == "Delivery")
             {
+                btnMenuManagement.Visible = false;
+                btnTakeOrder.Visible = false;
+                btnKitchenView.Visible = false;
+                btnCustomers.Visible = false;
+                btnInventory.Visible = false;
+                btnReports.Visible = false;
+                btnStaff.Visible = false;
                 btnDelivery.Visible = true;
+                btnSettings.Visible = false;
             }
         }
 
@@ -249,10 +241,8 @@ namespace Takeaway_Restaurant_Management_System.Forms
 
         public void LoadDashboardStats()
         {
-            // Clear content panel
             panelContent.Controls.Clear();
 
-            // Title
             Label lblTitle = new Label();
             lblTitle.Text = "Dashboard Overview";
             lblTitle.Font = new Font("Segoe UI", 18, FontStyle.Bold);
@@ -263,21 +253,15 @@ namespace Takeaway_Restaurant_Management_System.Forms
 
             try
             {
-                // Update status
                 lblStatus.Text = "🔄 Loading stats...";
                 Application.DoEvents();
 
-                // Get real stats from database
                 int todayOrders = DatabaseManager.Instance.GetTodayOrdersCount();
                 decimal todayRevenue = DatabaseManager.Instance.GetTodayRevenue();
                 int pendingOrders = DatabaseManager.Instance.GetPendingOrdersCount();
                 var menuItems = DatabaseManager.Instance.GetMenuItems();
                 int menuCount = menuItems?.Count ?? 0;
 
-                // Debug output
-                System.Diagnostics.Debug.WriteLine($"Today Orders: {todayOrders}, Revenue: {todayRevenue}");
-
-                // Create stats cards
                 CreateStatCard("📊 Today's Orders", todayOrders.ToString(), new Point(20, 80), Color.FromArgb(52, 152, 219));
                 CreateStatCard("💰 Today's Revenue", todayRevenue.ToString("C"), new Point(320, 80), Color.FromArgb(46, 204, 113));
                 CreateStatCard("🍽️ Menu Items", menuCount.ToString(), new Point(620, 80), Color.FromArgb(155, 89, 182));
@@ -327,15 +311,19 @@ namespace Takeaway_Restaurant_Management_System.Forms
             panelContent.Controls.Add(card);
         }
 
-        // =============================================
-        // BUTTON CLICK HANDLERS
-        // =============================================
-
         private void BtnMenuManagement_Click(object sender, EventArgs e)
         {
-            frmMenuManagement menuForm = new frmMenuManagement();
-            menuForm.ShowDialog();
-            LoadDashboardStats();
+            if (currentUser.Role == "Admin")
+            {
+                frmMenuManagement menuForm = new frmMenuManagement();
+                menuForm.ShowDialog();
+                LoadDashboardStats();
+            }
+            else
+            {
+                MessageBox.Show("Access Denied. Only Admin can access Menu Management.",
+                    "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void BtnTakeOrder_Click(object sender, EventArgs e)
@@ -361,37 +349,78 @@ namespace Takeaway_Restaurant_Management_System.Forms
 
         private void BtnInventory_Click(object sender, EventArgs e)
         {
-            frmInventory inventoryForm = new frmInventory();
-            inventoryForm.ShowDialog();
-            LoadDashboardStats();
+            if (currentUser.Role == "Admin")
+            {
+                frmInventory inventoryForm = new frmInventory();
+                inventoryForm.ShowDialog();
+                LoadDashboardStats();
+            }
+            else
+            {
+                MessageBox.Show("Access Denied. Only Admin can access Inventory.",
+                    "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void BtnReports_Click(object sender, EventArgs e)
         {
-            frmReports reportsForm = new frmReports();
-            reportsForm.ShowDialog();
-            LoadDashboardStats();
+            if (currentUser.Role == "Admin")
+            {
+                frmReports reportsForm = new frmReports();
+                reportsForm.ShowDialog();
+                LoadDashboardStats();
+            }
+            else
+            {
+                MessageBox.Show("Access Denied. Only Admin can access Reports.",
+                    "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void BtnStaff_Click(object sender, EventArgs e)
         {
-            frmStaffManagement staffForm = new frmStaffManagement();
-            staffForm.ShowDialog();
-            LoadDashboardStats();
+            if (currentUser.Role == "Admin")
+            {
+                frmStaffManagement staffForm = new frmStaffManagement();
+                staffForm.ShowDialog();
+                LoadDashboardStats();
+            }
+            else
+            {
+                MessageBox.Show("Access Denied. Only Admin can access Staff Management.",
+                    "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void BtnDelivery_Click(object sender, EventArgs e)
         {
-            frmDeliveryManagement deliveryForm = new frmDeliveryManagement();
-            deliveryForm.ShowDialog();
-            LoadDashboardStats();
+            // Cashier, Admin, and Delivery can all access Delivery Management
+            if (currentUser.Role == "Admin" || currentUser.Role == "Cashier" || currentUser.Role == "Delivery")
+            {
+                frmDeliveryManagement deliveryForm = new frmDeliveryManagement();
+                deliveryForm.ShowDialog();
+                LoadDashboardStats();
+            }
+            else
+            {
+                MessageBox.Show("Access Denied.", "Access Denied",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void BtnSettings_Click(object sender, EventArgs e)
         {
-            frmSettings settingsForm = new frmSettings();
-            settingsForm.ShowDialog();
-            LoadDashboardStats();
+            if (currentUser.Role == "Admin")
+            {
+                frmSettings settingsForm = new frmSettings();
+                settingsForm.ShowDialog();
+                LoadDashboardStats();
+            }
+            else
+            {
+                MessageBox.Show("Access Denied. Only Admin can access Settings.",
+                    "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void BtnLogout_Click(object sender, EventArgs e)

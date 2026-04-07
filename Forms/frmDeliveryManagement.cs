@@ -36,16 +36,17 @@ namespace Takeaway_Restaurant_Management_System.Forms
         private List<Staff> deliveryStaff;
         private bool isAdmin;
         private bool isDelivery;
+        private bool isCashier;
 
         public frmDeliveryManagement()
         {
             isAdmin = (CurrentUser.Role == "Admin");
             isDelivery = (CurrentUser.Role == "Delivery");
+            isCashier = (CurrentUser.Role == "Cashier");
 
-            // If neither Admin nor Delivery, show error and close
-            if (!isAdmin && !isDelivery)
+            if (!isAdmin && !isDelivery && !isCashier)
             {
-                MessageBox.Show("Access Denied. Only Admin and Delivery Staff can access this page.",
+                MessageBox.Show("Access Denied. Only Admin, Cashier, and Delivery Staff can access this page.",
                     "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
@@ -54,7 +55,8 @@ namespace Takeaway_Restaurant_Management_System.Forms
 
             InitializeComponent();
 
-            if (isAdmin)
+            // Load delivery staff list for assignment (for Admin and Cashier)
+            if (isAdmin || isCashier)
             {
                 LoadAllDeliveries();
                 LoadPendingDeliveries();
@@ -74,12 +76,12 @@ namespace Takeaway_Restaurant_Management_System.Forms
             refreshTimer = new Timer();
             refreshTimer.Interval = 30000;
             refreshTimer.Tick += (s, e) => {
-                if (isAdmin && this.IsHandleCreated)
+                if (isAdmin || isCashier)
                 {
                     LoadAllDeliveries();
                     LoadPendingDeliveries();
                 }
-                if (isDelivery && this.IsHandleCreated)
+                if (isDelivery)
                 {
                     LoadMyDeliveries();
                     LoadAvailableOrders();
@@ -96,7 +98,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
             this.BackColor = Color.FromArgb(240, 240, 240);
             this.MinimumSize = new Size(1200, 650);
 
-            // Title
             Label lblTitle = new Label();
             lblTitle.Text = "🚚 DELIVERY MANAGEMENT";
             lblTitle.Font = new Font("Segoe UI", 20, FontStyle.Bold);
@@ -105,10 +106,11 @@ namespace Takeaway_Restaurant_Management_System.Forms
             lblTitle.Size = new Size(400, 40);
             this.Controls.Add(lblTitle);
 
-            // Role info
             Label lblRole = new Label();
             if (isAdmin)
-                lblRole.Text = $"Viewing as: Admin - All deliveries shown below";
+                lblRole.Text = $"Viewing as: Admin";
+            else if (isCashier)
+                lblRole.Text = $"Viewing as: Cashier (Can Assign Deliveries)";
             else
                 lblRole.Text = $"Welcome, {CurrentUser.FullName} (Delivery Staff)";
             lblRole.Font = new Font("Segoe UI", 11);
@@ -117,16 +119,15 @@ namespace Takeaway_Restaurant_Management_System.Forms
             lblRole.Size = new Size(500, 25);
             this.Controls.Add(lblRole);
 
-            // Tab Control
             tabControl = new TabControl();
             tabControl.Location = new Point(20, 90);
             tabControl.Size = new Size(1350, 540);
             tabControl.Font = new Font("Segoe UI", 10);
             this.Controls.Add(tabControl);
 
-            // ========== ALL DELIVERIES TAB (Admin View) ==========
+            // ========== ALL DELIVERIES TAB ==========
             tabAllDeliveries = new TabPage("📋 All Deliveries");
-            if (isAdmin) tabControl.TabPages.Add(tabAllDeliveries);
+            tabControl.TabPages.Add(tabAllDeliveries);
 
             Panel panelAll = new Panel();
             panelAll.Dock = DockStyle.Fill;
@@ -163,9 +164,9 @@ namespace Takeaway_Restaurant_Management_System.Forms
             btnRefreshAll.Click += BtnRefreshAll_Click;
             panelAllButtons.Controls.Add(btnRefreshAll);
 
-            // ========== PENDING DELIVERIES TAB (Admin View) ==========
+            // ========== PENDING DELIVERIES TAB (Admin and Cashier can assign) ==========
             tabPendingDeliveries = new TabPage("⏳ Pending Deliveries");
-            if (isAdmin) tabControl.TabPages.Add(tabPendingDeliveries);
+            if (isAdmin || isCashier) tabControl.TabPages.Add(tabPendingDeliveries);
 
             Panel panelPending = new Panel();
             panelPending.Dock = DockStyle.Fill;
@@ -202,29 +203,37 @@ namespace Takeaway_Restaurant_Management_System.Forms
             panelPendingButtons.Controls.Add(btnRefreshPending);
 
             Label lblAssignTo = new Label();
-            lblAssignTo.Text = "Assign to:";
+            lblAssignTo.Text = "Assign to Delivery Staff:";
             lblAssignTo.Font = new Font("Segoe UI", 10);
             lblAssignTo.Location = new Point(130, 30);
-            lblAssignTo.Size = new Size(70, 25);
+            lblAssignTo.Size = new Size(140, 25);
             panelPendingButtons.Controls.Add(lblAssignTo);
 
             cmbDeliveryStaff = new ComboBox();
-            cmbDeliveryStaff.Location = new Point(205, 28);
+            cmbDeliveryStaff.Location = new Point(275, 28);
             cmbDeliveryStaff.Size = new Size(150, 25);
             cmbDeliveryStaff.DropDownStyle = ComboBoxStyle.DropDownList;
             panelPendingButtons.Controls.Add(cmbDeliveryStaff);
 
             btnAssignToStaff = new Button();
             btnAssignToStaff.Text = "📋 Assign to Staff";
-            btnAssignToStaff.Location = new Point(370, 25);
-            btnAssignToStaff.Size = new Size(130, 32);
+            btnAssignToStaff.Location = new Point(440, 25);
+            btnAssignToStaff.Size = new Size(140, 32);
             btnAssignToStaff.BackColor = Color.FromArgb(46, 204, 113);
             btnAssignToStaff.ForeColor = Color.White;
             btnAssignToStaff.FlatStyle = FlatStyle.Flat;
             btnAssignToStaff.Click += BtnAssignToStaff_Click;
             panelPendingButtons.Controls.Add(btnAssignToStaff);
 
-            // ========== MY DELIVERIES TAB (Delivery Staff Only) ==========
+            Label lblInstruction = new Label();
+            lblInstruction.Text = "💡 Select an order, choose a delivery staff, and click 'Assign to Staff'";
+            lblInstruction.Font = new Font("Segoe UI", 9, FontStyle.Italic);
+            lblInstruction.ForeColor = Color.FromArgb(100, 100, 100);
+            lblInstruction.Location = new Point(10, 65);
+            lblInstruction.Size = new Size(500, 20);
+            panelPendingButtons.Controls.Add(lblInstruction);
+
+            // ========== MY DELIVERIES TAB (Delivery Staff only) ==========
             tabMyDeliveries = new TabPage("📦 My Deliveries");
             if (isDelivery) tabControl.TabPages.Add(tabMyDeliveries);
 
@@ -283,7 +292,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             btnMarkDelivered.Click += BtnMarkDelivered_Click;
             panelMyButtons.Controls.Add(btnMarkDelivered);
 
-            // ========== AVAILABLE ORDERS TAB (Delivery Staff Only) ==========
+            // ========== AVAILABLE ORDERS TAB (Delivery Staff only) ==========
             tabAvailableOrders = new TabPage("🆕 Available Orders");
             if (isDelivery) tabControl.TabPages.Add(tabAvailableOrders);
 
@@ -332,16 +341,18 @@ namespace Takeaway_Restaurant_Management_System.Forms
             panelAvailableButtons.Controls.Add(btnAssignToMe);
 
             // Instructions
-            Label lblInstruction = new Label();
+            Label lblInstructionBottom = new Label();
             if (isDelivery)
-                lblInstruction.Text = "💡 Select an order and click 'Assign to Me' to start delivery";
+                lblInstructionBottom.Text = "💡 Select an order and click 'Assign to Me' to start delivery";
+            else if (isCashier)
+                lblInstructionBottom.Text = "💡 Cashier View - You can assign deliveries to staff from 'Pending Deliveries' tab";
             else
-                lblInstruction.Text = "💡 Admin View - All deliveries and pending orders shown above";
-            lblInstruction.Font = new Font("Segoe UI", 9, FontStyle.Italic);
-            lblInstruction.ForeColor = Color.FromArgb(100, 100, 100);
-            lblInstruction.Location = new Point(20, 640);
-            lblInstruction.Size = new Size(500, 25);
-            this.Controls.Add(lblInstruction);
+                lblInstructionBottom.Text = "💡 Admin View - All deliveries and pending orders shown above";
+            lblInstructionBottom.Font = new Font("Segoe UI", 9, FontStyle.Italic);
+            lblInstructionBottom.ForeColor = Color.FromArgb(100, 100, 100);
+            lblInstructionBottom.Location = new Point(20, 640);
+            lblInstructionBottom.Size = new Size(600, 25);
+            this.Controls.Add(lblInstructionBottom);
 
             // Status
             lblStatus = new Label();
