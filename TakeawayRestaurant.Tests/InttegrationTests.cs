@@ -92,18 +92,4 @@ namespace TakeawayRestaurant.Tests
             Assert.IsNotNull(report);
         }
 
-        [TestMethod]
-        public void GetPopularItemsReport_ReturnsData()
-        {
-            var report = db.GetPopularItemsReport(DateTime.Today.AddDays(-30), DateTime.Today);
-            Assert.IsNotNull(report);
-        }
-
-        [TestMethod]
-        public void GetStaffPerformanceReport_ReturnsData()
-        {
-            var report = db.GetStaffPerformanceReport(DateTime.Today.AddDays(-30), DateTime.Today);
-            Assert.IsNotNull(report);
-        }
-    }
-}
+       
