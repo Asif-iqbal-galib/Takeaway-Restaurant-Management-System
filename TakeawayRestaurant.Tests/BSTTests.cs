@@ -129,4 +129,25 @@ namespace TakeawayRestaurant.Tests
             Assert.AreEqual("Pizza", items[2].Name);
         }
 
-        
+        [TestMethod]
+        public void GetAvailableItems_ReturnsOnlyAvailable()
+        {
+            bst.Insert(item1);
+            bst.Insert(item2);
+            item2.IsAvailable = false;
+            var available = bst.GetAvailableItems();
+            Assert.AreEqual(1, available.Count);
+            Assert.AreEqual("Burger", available[0].Name);
+        }
+
+        [TestMethod]
+        public void GetItemsByCategory_ReturnsCorrectItems()
+        {
+            bst.Insert(item1);
+            bst.Insert(item3);
+            var sides = bst.GetItemsByCategory("Sides");
+            Assert.AreEqual(1, sides.Count);
+            Assert.AreEqual("Fries", sides[0].Name);
+        }
+    }
+}
