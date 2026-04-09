@@ -23,8 +23,8 @@ namespace Takeaway_Restaurant_Management_System.Forms
         private Button btnStaff;
         private Button btnDelivery;
         private Button btnSettings;
-        private Button btnLogout;
         private Button btnAIChatbot;
+        private Button btnLogout;
         private Label lblStatus;
         private Timer timer;
 
@@ -42,8 +42,9 @@ namespace Takeaway_Restaurant_Management_System.Forms
 
         private void InitializeComponent()
         {
+            // Increased form height from 700 to 850 to fit all buttons
             this.Text = "Main Dashboard - Appeliano Restaurant";
-            this.Size = new Size(1200, 700);
+            this.Size = new Size(1200, 850);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(240, 240, 240);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -67,7 +68,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             lblStatus = new Label();
             lblStatus.Font = new Font("Segoe UI", 9);
             lblStatus.ForeColor = Color.FromArgb(100, 100, 100);
-            lblStatus.Location = new Point(20, 640);
+            lblStatus.Location = new Point(20, 780);
             lblStatus.Size = new Size(400, 25);
             this.Controls.Add(lblStatus);
 
@@ -75,16 +76,18 @@ namespace Takeaway_Restaurant_Management_System.Forms
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
 
+            // Increased panel height from 520 to 700
             panelMenu = new Panel();
             panelMenu.Location = new Point(20, 100);
-            panelMenu.Size = new Size(250, 520);
+            panelMenu.Size = new Size(250, 700);
             panelMenu.BackColor = Color.FromArgb(52, 73, 94);
             panelMenu.BorderStyle = BorderStyle.None;
+            panelMenu.AutoScroll = true; // Added AutoScroll in case buttons overflow
             this.Controls.Add(panelMenu);
 
             panelContent = new Panel();
             panelContent.Location = new Point(290, 100);
-            panelContent.Size = new Size(880, 520);
+            panelContent.Size = new Size(880, 700);
             panelContent.BackColor = Color.White;
             panelContent.BorderStyle = BorderStyle.FixedSingle;
             panelContent.AutoScroll = true;
@@ -130,8 +133,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             btnSettings.Click += BtnSettings_Click;
             yPos += btnHeight + btnSpacing;
 
-            // AI Chatbot Button - visible to Admin and Cashier
-            btnAIChatbot = CreateMenuButton("🤖 AI Chatbot Assistant", yPos);
+            btnAIChatbot = CreateMenuButton("🤖 AI Assistant", yPos);
             btnAIChatbot.Click += BtnAIChatbot_Click;
             yPos += btnHeight + btnSpacing;
 
@@ -172,6 +174,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
         {
             if (currentUser == null) return;
 
+            // Admin sees everything
             if (currentUser.Role == "Admin")
             {
                 btnMenuManagement.Visible = true;
@@ -184,7 +187,9 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnDelivery.Visible = true;
                 btnSettings.Visible = true;
                 btnAIChatbot.Visible = true;
+                btnLogout.Visible = true;
             }
+            // Cashier Role
             else if (currentUser.Role == "Cashier")
             {
                 btnMenuManagement.Visible = false;
@@ -196,8 +201,10 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnStaff.Visible = false;
                 btnDelivery.Visible = true;
                 btnSettings.Visible = false;
-                btnAIChatbot.Visible = true;  // Cashier can use AI Chatbot
+                btnAIChatbot.Visible = true;
+                btnLogout.Visible = true;
             }
+            // Kitchen Staff Role
             else if (currentUser.Role == "Kitchen")
             {
                 btnMenuManagement.Visible = false;
@@ -210,7 +217,9 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnDelivery.Visible = false;
                 btnSettings.Visible = false;
                 btnAIChatbot.Visible = false;
+                btnLogout.Visible = true;
             }
+            // Delivery Staff Role
             else if (currentUser.Role == "Delivery")
             {
                 btnMenuManagement.Visible = false;
@@ -223,6 +232,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnDelivery.Visible = true;
                 btnSettings.Visible = false;
                 btnAIChatbot.Visible = false;
+                btnLogout.Visible = true;
             }
         }
 
@@ -435,7 +445,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
 
         private void BtnAIChatbot_Click(object sender, EventArgs e)
         {
-            // Only Admin and Cashier can use AI Chatbot
             if (currentUser.Role == "Admin" || currentUser.Role == "Cashier")
             {
                 frmAIChatbot chatbot = new frmAIChatbot();
