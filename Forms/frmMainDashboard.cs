@@ -24,6 +24,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
         private Button btnDelivery;
         private Button btnSettings;
         private Button btnLogout;
+        private Button btnAIChatbot;
         private Label lblStatus;
         private Timer timer;
 
@@ -129,13 +130,18 @@ namespace Takeaway_Restaurant_Management_System.Forms
             btnSettings.Click += BtnSettings_Click;
             yPos += btnHeight + btnSpacing;
 
+            // AI Chatbot Button - visible to Admin and Cashier
+            btnAIChatbot = CreateMenuButton("🤖 AI Chatbot Assistant", yPos);
+            btnAIChatbot.Click += BtnAIChatbot_Click;
+            yPos += btnHeight + btnSpacing;
+
             btnLogout = CreateMenuButton("🚪 Logout", yPos);
             btnLogout.BackColor = Color.FromArgb(231, 76, 60);
             btnLogout.Click += BtnLogout_Click;
 
             panelMenu.Controls.AddRange(new Control[] {
                 btnMenuManagement, btnTakeOrder, btnKitchenView, btnCustomers,
-                btnInventory, btnReports, btnStaff, btnDelivery, btnSettings, btnLogout
+                btnInventory, btnReports, btnStaff, btnDelivery, btnSettings, btnAIChatbot, btnLogout
             });
 
             ConfigureRoleBasedAccess();
@@ -177,6 +183,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnStaff.Visible = true;
                 btnDelivery.Visible = true;
                 btnSettings.Visible = true;
+                btnAIChatbot.Visible = true;
             }
             else if (currentUser.Role == "Cashier")
             {
@@ -189,6 +196,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnStaff.Visible = false;
                 btnDelivery.Visible = true;
                 btnSettings.Visible = false;
+                btnAIChatbot.Visible = true;  // Cashier can use AI Chatbot
             }
             else if (currentUser.Role == "Kitchen")
             {
@@ -201,6 +209,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnStaff.Visible = false;
                 btnDelivery.Visible = false;
                 btnSettings.Visible = false;
+                btnAIChatbot.Visible = false;
             }
             else if (currentUser.Role == "Delivery")
             {
@@ -213,6 +222,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 btnStaff.Visible = false;
                 btnDelivery.Visible = true;
                 btnSettings.Visible = false;
+                btnAIChatbot.Visible = false;
             }
         }
 
@@ -262,8 +272,9 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 var menuItems = DatabaseManager.Instance.GetMenuItems();
                 int menuCount = menuItems?.Count ?? 0;
 
+                // Using £ (pound) currency symbol
                 CreateStatCard("📊 Today's Orders", todayOrders.ToString(), new Point(20, 80), Color.FromArgb(52, 152, 219));
-                CreateStatCard("💰 Today's Revenue", todayRevenue.ToString("C"), new Point(320, 80), Color.FromArgb(46, 204, 113));
+                CreateStatCard("💰 Today's Revenue", $"£{todayRevenue:F2}", new Point(320, 80), Color.FromArgb(46, 204, 113));
                 CreateStatCard("🍽️ Menu Items", menuCount.ToString(), new Point(620, 80), Color.FromArgb(155, 89, 182));
                 CreateStatCard("⏳ Pending Orders", pendingOrders.ToString(), new Point(920, 80), Color.FromArgb(241, 196, 15));
 
@@ -394,7 +405,6 @@ namespace Takeaway_Restaurant_Management_System.Forms
 
         private void BtnDelivery_Click(object sender, EventArgs e)
         {
-            // Cashier, Admin, and Delivery can all access Delivery Management
             if (currentUser.Role == "Admin" || currentUser.Role == "Cashier" || currentUser.Role == "Delivery")
             {
                 frmDeliveryManagement deliveryForm = new frmDeliveryManagement();
@@ -419,6 +429,21 @@ namespace Takeaway_Restaurant_Management_System.Forms
             else
             {
                 MessageBox.Show("Access Denied. Only Admin can access Settings.",
+                    "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void BtnAIChatbot_Click(object sender, EventArgs e)
+        {
+            // Only Admin and Cashier can use AI Chatbot
+            if (currentUser.Role == "Admin" || currentUser.Role == "Cashier")
+            {
+                frmAIChatbot chatbot = new frmAIChatbot();
+                chatbot.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("AI Chatbot is only available for Admin and Cashier.",
                     "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
