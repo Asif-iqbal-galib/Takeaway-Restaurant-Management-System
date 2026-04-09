@@ -567,24 +567,4 @@ namespace Takeaway_Restaurant_Management_System.Forms
             StartNewOrder();
         }
 
-        private void BtnClear_Click(object sender, EventArgs e)
-        {
-            rtbChatHistory.Clear();
-            AddWelcomeMessage();
-        }
-
-        private void AnimationTimer_Tick(object sender, EventArgs e)
-        {
-            dotCount = (dotCount + 1) % 4;
-            string dots = new string('.', dotCount);
-            lblStatus.Text = $"AI is thinking{dots}";
-            if (dotCount == 0) lblStatus.Text = "AI is thinking";
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            animationTimer?.Stop();
-            base.OnFormClosing(e);
-        }
-    }
-}
+      
