@@ -257,7 +257,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             grpOrder.Controls.Add(lblSubtotalLabel);
 
             lblSubtotal = new Label();
-            lblSubtotal.Text = "$0.00";
+            lblSubtotal.Text = "£0.00";
             lblSubtotal.Font = new Font("Segoe UI", 9, FontStyle.Bold);
             lblSubtotal.Location = new Point(sumX + 60, 215);
             lblSubtotal.Size = new Size(70, 22);
@@ -271,7 +271,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             grpOrder.Controls.Add(lblTaxLabel);
 
             lblTax = new Label();
-            lblTax.Text = "$0.00";
+            lblTax.Text = "£0.00";
             lblTax.Font = new Font("Segoe UI", 9);
             lblTax.Location = new Point(sumX + 65, 240);
             lblTax.Size = new Size(70, 22);
@@ -285,7 +285,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             grpOrder.Controls.Add(lblTotalLabel);
 
             lblTotal = new Label();
-            lblTotal.Text = "$0.00";
+            lblTotal.Text = "£0.00";
             lblTotal.Font = new Font("Segoe UI", 11, FontStyle.Bold);
             lblTotal.ForeColor = Color.FromArgb(52, 152, 219);
             lblTotal.Location = new Point(sumX + 60, 265);
@@ -341,7 +341,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             grpPayment.Controls.Add(lblChangeLabel);
 
             lblChange = new Label();
-            lblChange.Text = "$0.00";
+            lblChange.Text = "£0.00";
             lblChange.Font = new Font("Segoe UI", 9, FontStyle.Bold);
             lblChange.ForeColor = Color.FromArgb(46, 204, 113);
             lblChange.Location = new Point(465, 18);
@@ -549,14 +549,14 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 decimal total = item.Quantity * item.UnitPrice;
                 sub += total;
                 count += item.Quantity;
-                dt.Rows.Add(item.ItemName, item.Quantity, item.UnitPrice.ToString("C"), total.ToString("C"));
+                dt.Rows.Add(item.ItemName, item.Quantity, $"£{item.UnitPrice:F2}", $"£{total:F2}");
             }
 
             dgvOrder.DataSource = dt;
             lblItemCount.Text = count.ToString();
-            lblSubtotal.Text = sub.ToString("C");
-            lblTax.Text = (sub * taxRate).ToString("C");
-            lblTotal.Text = (sub + (sub * taxRate)).ToString("C");
+            lblSubtotal.Text = $"£{sub:F2}";
+            lblTax.Text = $"£{(sub * taxRate):F2}";
+            lblTotal.Text = $"£{(sub + (sub * taxRate)):F2}";
         }
 
         private void TxtAmountReceived_TextChanged(object sender, EventArgs e)
@@ -568,12 +568,13 @@ namespace Takeaway_Restaurant_Management_System.Forms
         {
             if (decimal.TryParse(txtAmountReceived.Text, out decimal received))
             {
-                string totalStr = lblTotal.Text.Replace("$", "").Replace("£", "").Replace(",", "");
+                string totalStr = lblTotal.Text.Replace("£", "").Replace(",", "");
                 if (decimal.TryParse(totalStr, out decimal total))
                 {
                     if (received >= total)
                     {
-                        lblChange.Text = (received - total).ToString("C");
+                        decimal change = received - total;
+                        lblChange.Text = $"£{change:F2}";
                         lblChange.ForeColor = Color.Green;
                     }
                     else
@@ -582,6 +583,11 @@ namespace Takeaway_Restaurant_Management_System.Forms
                         lblChange.ForeColor = Color.Red;
                     }
                 }
+            }
+            else
+            {
+                lblChange.Text = "£0.00";
+                lblChange.ForeColor = Color.Gray;
             }
         }
 
@@ -602,7 +608,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 return;
             }
 
-            string totalStr = lblTotal.Text.Replace("$", "").Replace("£", "").Replace(",", "");
+            string totalStr = lblTotal.Text.Replace("£", "").Replace(",", "");
             if (!decimal.TryParse(totalStr, out decimal total)) return;
 
             string method = cmbPaymentMethod.SelectedItem.ToString();
@@ -619,7 +625,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
             {
                 string orderNum = $"ORD-{DateTime.Now:yyyyMMdd-HHmmss}";
 
-                // IMPORTANT: Set Status to "Pending" so it appears in Kitchen View
+                // Set Status to "Pending" so it appears in Kitchen View
                 Order order = new Order
                 {
                     OrderNumber = orderNum,
@@ -627,7 +633,7 @@ namespace Takeaway_Restaurant_Management_System.Forms
                     CustomerPhone = txtCustomerPhone.Text,
                     DeliveryAddress = chkDelivery.Checked ? txtDeliveryAddress.Text : "",
                     TotalAmount = total,
-                    Status = "Pending",  // ← FORCES ORDER TO SHOW IN KITCHEN VIEW
+                    Status = "Pending",
                     PaymentMethod = method,
                     PaymentStatus = "Paid",
                     CreatedBy = CurrentUser.UserID
@@ -648,8 +654,8 @@ namespace Takeaway_Restaurant_Management_System.Forms
                 if (id > 0)
                 {
                     string msg = chkDelivery.Checked ?
-                        $"Delivery Order Created!\nOrder: {orderNum}\nTotal: {total:C}\nAddress: {txtDeliveryAddress.Text}" :
-                        $"Payment Successful!\nOrder: {orderNum}\nTotal: {total:C}\nChange: {lblChange.Text}";
+                        $"Delivery Order Created!\nOrder: {orderNum}\nTotal: £{total:F2}\nAddress: {txtDeliveryAddress.Text}" :
+                        $"Payment Successful!\nOrder: {orderNum}\nTotal: £{total:F2}\nChange: {lblChange.Text}";
                     MessageBox.Show(msg, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
