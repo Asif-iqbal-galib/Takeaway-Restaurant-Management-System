@@ -41,8 +41,21 @@ namespace TakeawayRestaurant.Tests
             order.CalculateTotal();
             Assert.AreEqual(27.97m, order.TotalAmount);
         }
+        [TestMethod]
+        public void Customer_Constructor_SetsDefaultValues()
+        {
+            var customer = new Customer();
+            Assert.IsTrue(customer.IsActive);
+            Assert.AreEqual(0, customer.LoyaltyPoints);
+        }
 
-       
+        [TestMethod]
+        public void Customer_ToString_ReturnsNameAndPhone()
+        {
+            var customer = new Customer("John Doe", "01711111111");
+            Assert.AreEqual("John Doe - 01711111111", customer.ToString());
+        }
+
 
         [TestMethod]
         public void Staff_RoleProperties_ReturnCorrectBooleans()
